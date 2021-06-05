@@ -32,7 +32,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     "@nuxtjs/eslint-module",
-    "@nuxtjs/google-fonts",
+    "@nuxtjs/google-fonts"
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -40,9 +40,11 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  // Google fonts
   googleFonts: {
     families: {
-      Roboto: [100, 300, 400, 500,700,900],
+      Roboto: [100, 300, 400, 500,700],
     },
   },
 }

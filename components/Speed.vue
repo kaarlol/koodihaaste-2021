@@ -40,36 +40,24 @@ export default {
     }, 
     methods: {
         emitSpeed: function() {
-            let errors = true
-
             this.errorOne = ''
             this.errorTwo = ''
 
-            if (this.speedOne === null) {
-                this.errorOne = 'Syötä nopeus.'
-            } else if (this.speedOne === 0) {
-                this.errorOne = 'Antamasi nopeus ei voi olla 0 km/h.'
-            } else if (this.speedOne < 0) {
-                this.errorOne = 'Antamasi nopeus ei voi olla negatiivinen.'
-            } else {
-                errors = false
-            }
-            
-            if (this.speedTwo === null) {
-                this.errorTwo = 'Syötä nopeus.'
-            } else if (this.speedTwo === 0) {
-                this.errorTwo = 'Antamasi nopeus ei voi olla 0 km/h.'
-            } else if (this.speedTwo < 0) {
-                this.errorTwo = 'Antamasi nopeus ei voi olla negatiivinen.'
-            } else {
-                errors = false
+            if (this.validateInput('speedOne', 'errorOne') && this.validateInput('speedTwo', 'errorTwo')) {
+              this.$emit('speed', [this.speedOne, this.speedTwo])
             }
 
-            if (!errors) {
-                this.$emit('speed', [this.speedOne, this.speedTwo])
+        },
+        validateInput: function(speed, error) {
+          if (this[speed] === null) {
+                this[error] = 'Syötä nopeus.'
+            } else if (this[speed] === 0) {
+                this.[error] = 'Antamasi nopeus ei voi olla 0 km/h.'
+            } else if (this[speed]< 0) {
+                this.[error] = 'Antamasi nopeus ei voi olla negatiivinen.'
+            } else {
+                return true
             }
-            
-
         }
     }
 }
