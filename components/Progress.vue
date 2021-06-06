@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="steps">
+      <!-- Loop through steps array in data to set html content -->
       <div
         v-for="step in steps"
         :key="step.number"
@@ -20,7 +21,7 @@
 <script>
 export default {
   props: {
-    state: {
+    state: { // Receive state from parent page (index.vue)
       type: Object,
       default: function() {
         return {}
@@ -29,7 +30,7 @@ export default {
   },
   data: function() {
     return {
-      steps: [
+      steps: [ // Define content for the progress bar and stage titles
         {
           number: 1,
           title: "Auto",
@@ -54,12 +55,15 @@ export default {
     }
   },
   methods: {
+    // Add css class active to currently active stage
     getActiveClass: function(value) {
       return this.state.active === value ? "active" : ""
     },
+    // Add css class completed to those stages that have been completed
     getCompletedClass: function(value) {
       return this.state.completed.includes(value) ? "completed" : ""
     },
+    // Allow to navigate back to those stages that have been set already
     linkBack: function(value) {
       this.state.completed.includes(value)
         ? this.$emit("stateChange", value)

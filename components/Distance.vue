@@ -1,9 +1,12 @@
 <template>
   <div class="distance">
+    <!-- Show input field validation errors -->
     <p class="errors">
       {{ error }} &nbsp;
     </p>
+    <!-- An input field to set the distance -->
     <input v-model.number="distance" type="number" min="1" placeholder="Anna ajomatka" autofocus @keyup.enter="emitDistance(distance)">
+    <!-- Button to save the distance and emit it to parent -->
     <button @click="emitDistance">
       Tallenna matkan pituus
     </button>
@@ -13,18 +16,19 @@
 <script>
 export default {
     props: {
-      selected: {
+      selected: { // Get earlier set distance from parent
         type: Number,
         default: null
       }
     },
     data: function() {
         return {
-            distance: this.selected,
-            error: ''
+            distance: this.selected, // Set the default distance to that gotten from parent
+            error: '' // Validation error value placeholder
         }
     }, 
     methods: {
+        // Method to validate the input value and then emit it to parent for saving
         emitDistance: function() {
             this.error = ''
             if (this.distance === null) {

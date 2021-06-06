@@ -2,18 +2,23 @@
   <div class="wrapper">
     <div class="speeds">
       <div class="speed">
+        <!-- Show input field validation errors -->
         <p class="errors">
           {{ errorOne }} &nbsp;
         </p>
+        <!-- An input field to set the first speed to compare -->
         <input v-model.number="speedOne" type="number" min="1" placeholder="Syötä nopeus 1">
       </div>
       <div class="speed">
+        <!-- Show input field validation errors -->
         <p class="errors">
           {{ errorTwo }} &nbsp;
         </p>
+        <!-- An input field to set the second speed to compare -->
         <input v-model.number="speedTwo" type="number" min="1" placeholder="Syötä nopeus 2">
       </div>
     </div>
+    <!-- Button to save the speeds and emit them to parent -->
     <button @click="emitSpeed">
       Tallenna vertailtavat nopeudet
     </button>
@@ -23,7 +28,7 @@
 <script>
 export default {
     props: {
-      selected: {
+      selected: { // Get earlier set speeds from parent
         type: Array,
         default: function() {
           return [null, null]
@@ -32,13 +37,14 @@ export default {
     },
     data: function() {
         return {
-            speedOne: this.selected[0],
-            speedTwo: this.selected[1],
-            errorOne: '',
-            errorTwo: ''
+            speedOne: this.selected[0], // Set the default speed 1 to that gotten from parent
+            speedTwo: this.selected[1], // Set the default speed 2 to that gotten from parent
+            errorOne: '', // First validation error value placeholder
+            errorTwo: '' // Second validation error value placeholder
         }
     }, 
     methods: {
+        // Method to emit input values to parent for saving
         emitSpeed: function() {
             this.errorOne = ''
             this.errorTwo = ''
@@ -48,6 +54,7 @@ export default {
             }
 
         },
+        // Method to validate the input values used inside emitSpeed method
         validateInput: function(speed, error) {
           if (this[speed] === null) {
                 this[error] = 'Syötä nopeus.'

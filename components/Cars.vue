@@ -1,5 +1,6 @@
 <template>
   <div class="cars">
+    <!-- Loop through cars array in data to set content -->
     <div v-for="car in cars" :key="car.id" class="car" :class="selectedCar(car.id)" @click="carClick([car.id,car.img,car.consumption])">
       <img :src="car.img" :alt="'Auto ' + car.id">
       <h2>Auto {{ car.id }}</h2>
@@ -11,14 +12,14 @@
 <script>
 export default {
   props:{
-    selected: {
+    selected: { // Get earlier selected car id from parent
       type:String,
       default:''
     }
   }, 
   data: function() {
     return {
-      cars: [
+      cars: [ // Define content for the car selection
         {
           id: 'A',
           img: require('~/assets/auto-a.svg'),
@@ -39,9 +40,11 @@ export default {
     }
   },
   methods: {
+    // Emit car selection to parent (index.vue)
     carClick: function(event) {
       this.$emit('carClick', event)
     },
+    // Add selected css class to car if it has been selected earlier
     selectedCar: function(value) {
       return this.selected === value ?  'selected' : ''
     }

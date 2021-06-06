@@ -1,10 +1,12 @@
 <template>
   <div class="results">
+    <!-- Small ingress to remind about earlier car and distance selections -->
     <p
       class="strong"
     >
       Olet liikkeellä autolla {{ selection.car }} ja sinulla on {{ selection.distance }} km ajettavana.
     </p>
+    <!-- Table view to compare results with two different speeds -->
     <table>
       <thead>
         <tr>
@@ -25,16 +27,22 @@
           <td class="strong">
             Matka-aika
           </td>
+          <!-- Speed 1 travel time -->
           <td>{{ secondsToHms( times[0] ) }}</td>
+          <!-- Speed 2 travel time -->
           <td>{{ secondsToHms( times[1] ) }}</td>
+          <!-- Show which speed is faster -->
           <td>{{ resultTime }}</td>
         </tr>
         <tr>
           <td class="strong">
             Kulutus
           </td>
+          <!-- Speed 1 consumption -->
           <td>{{ consumptions[0].toFixed(2) }} litraa</td>
+          <!-- Speed 2 consumption -->
           <td>{{ consumptions[1].toFixed(2) }} litraa</td>
+          <!-- Show which speed has smaller consumption -->
           <td>{{ resultConsumption }}</td>
         </tr>
       </tbody>
@@ -45,7 +53,7 @@
 <script>
 export default {
   props: {
-    selection: {
+    selection: { // Get earlier selections as prop from parent page
       type: Object,
       default: function() {
         return {}
@@ -53,12 +61,14 @@ export default {
     }
   },
   computed: {
+    // Computed property for travel times
     times: function() {
       return [
         this.calculateTime(this.selection.speeds[0], this.selection.distance),
         this.calculateTime(this.selection.speeds[1], this.selection.distance)
       ]
     },
+    // Computed property that returns a comparison between travel times
     resultTime: function() {
       if (this.times[0] < this.times[1]) {
         return (
@@ -76,6 +86,7 @@ export default {
         return "Matka-aika on sama, koska valitsit samat nopeudet."
       }
     },
+    // Computed property for consumptions
     consumptions: function() {
       return [
         this.calculateConsumption(
@@ -90,6 +101,7 @@ export default {
         )
       ]
     },
+    // Computed property that returns a comparison between consumptions
     resultConsumption: function() {
       if (this.consumptions[0] < this.consumptions[1]) {
         return (
@@ -109,10 +121,12 @@ export default {
     }
   },
   methods: {
+    // Method to convert resulting hours tto seconds for comparison
     hoursToSeconds: function(hours) {
       let seconds = Math.round(hours * 3600)
       return seconds
     },
+    // Method to convert seconds to more human readable time format
     secondsToHms: function(seconds) {
       let h = Math.floor(seconds / 3600)
       let m = Math.floor((seconds % 3600) / 60)
@@ -127,10 +141,12 @@ export default {
       result += s === 0 ? "" : s + " sekunti" + addPlural(s)
       return result
     },
+    // Method to calculate travel time based on speed and distance
     calculateTime: function(speed, distance) {
       let hours = distance / speed
       return this.hoursToSeconds(hours)
     },
+    // Method to calculate consumption based on base consumption, speed and distance with given rate of change (1.009)
     calculateConsumption: function(consumption, speed, distance) {
       let consumptionPerKm = (consumption * 1.009 ** (speed - 1)) / 100
       let totalConsumption = consumptionPerKm * distance
