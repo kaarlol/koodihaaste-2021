@@ -8,7 +8,7 @@ Virallinen ratkaisu on asennettu Firebaseen [täällä](https://koodihaaste-2021
 
 Samassa repossa on myös [virtaviivaisempi versio](https://koodihaaste-2021.web.app/advanced/), joka ei kuitenkaan täytä annettua ohjeistusta aivan täysin.
 
-## Pysytys ja käynnistys
+## Pystytys ja käynnistys
 
 ```bash
 # install dependencies
